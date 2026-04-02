@@ -1,18 +1,567 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Tatiana Almario - Data Science Portfolio</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tatiana Almario | Data Science Portfolio</title>
+  <style>
+    :root {
+      --bg: #0f172a;
+      --bg-soft: #111827;
+      --card: #1e293b;
+      --text: #f8fafc;
+      --muted: #cbd5e1;
+      --accent: #38bdf8;
+      --accent-2: #a78bfa;
+      --border: rgba(255,255,255,0.08);
+      --shadow: 0 10px 30px rgba(0,0,0,0.25);
+      --max-width: 1100px;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background: linear-gradient(135deg, #0f172a, #111827, #1e1b4b);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .container {
+      width: 90%;
+      max-width: var(--max-width);
+      margin: 0 auto;
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      backdrop-filter: blur(10px);
+      background: rgba(15, 23, 42, 0.75);
+      border-bottom: 1px solid var(--border);
+      z-index: 10;
+    }
+
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px 0;
+    }
+
+    .logo {
+      font-size: 1.2rem;
+      font-weight: bold;
+      letter-spacing: 0.5px;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 20px;
+      list-style: none;
+      flex-wrap: wrap;
+    }
+
+    .nav-links a {
+      color: var(--muted);
+      transition: 0.3s;
+    }
+
+    .nav-links a:hover {
+      color: var(--accent);
+    }
+
+    .hero {
+      min-height: 90vh;
+      display: flex;
+      align-items: center;
+      padding: 80px 0 40px;
+    }
+
+    .hero-content {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 40px;
+      align-items: center;
+    }
+
+    .hero-text h1 {
+      font-size: 3rem;
+      line-height: 1.1;
+      margin-bottom: 16px;
+    }
+
+    .hero-text h1 span {
+      color: var(--accent);
+    }
+
+    .hero-text p {
+      font-size: 1.1rem;
+      color: var(--muted);
+      max-width: 650px;
+      margin-bottom: 28px;
+    }
+
+    .buttons {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 12px 22px;
+      border-radius: 999px;
+      font-weight: bold;
+      transition: 0.3s ease;
+      border: 1px solid transparent;
+    }
+
+    .btn-primary {
+      background: linear-gradient(90deg, var(--accent), var(--accent-2));
+      color: white;
+      box-shadow: var(--shadow);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      opacity: 0.95;
+    }
+
+    .btn-secondary {
+      border: 1px solid var(--border);
+      color: var(--text);
+      background: rgba(255,255,255,0.03);
+    }
+
+    .btn-secondary:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    .hero-card {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      padding: 28px;
+      box-shadow: var(--shadow);
+    }
+
+    .hero-card h3 {
+      margin-bottom: 14px;
+      color: var(--accent);
+    }
+
+    .hero-card ul {
+      list-style: none;
+      display: grid;
+      gap: 10px;
+      color: var(--muted);
+    }
+
+    section {
+      padding: 80px 0;
+    }
+
+    .section-title {
+      font-size: 2rem;
+      margin-bottom: 14px;
+    }
+
+    .section-subtitle {
+      color: var(--muted);
+      margin-bottom: 30px;
+      max-width: 750px;
+    }
+
+    .about,
+    .skills,
+    .projects,
+    .contact {
+      background: rgba(255,255,255,0.02);
+      border-top: 1px solid var(--border);
+    }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 30px;
+    }
+
+    .card {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 24px;
+      box-shadow: var(--shadow);
+    }
+
+    .card h3 {
+      margin-bottom: 12px;
+      color: var(--accent);
+    }
+
+    .card p,
+    .card li {
+      color: var(--muted);
+    }
+
+    .card ul {
+      padding-left: 18px;
+    }
+
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 18px;
+    }
+
+    .skill-box {
+      background: var(--card);
+      border: 1px solid var(--border);
+      padding: 18px;
+      border-radius: 16px;
+      text-align: center;
+      font-weight: bold;
+      color: var(--text);
+      transition: 0.3s;
+    }
+
+    .skill-box:hover {
+      transform: translateY(-4px);
+      border-color: var(--accent);
+    }
+
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 22px;
+    }
+
+    .project-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 22px;
+      box-shadow: var(--shadow);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .project-card h3 {
+      margin-bottom: 10px;
+      color: var(--text);
+    }
+
+    .project-card p {
+      color: var(--muted);
+      margin-bottom: 14px;
+    }
+
+    .tags {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 18px;
+    }
+
+    .tag {
+      background: rgba(56, 189, 248, 0.12);
+      color: var(--accent);
+      border: 1px solid rgba(56, 189, 248, 0.25);
+      padding: 6px 10px;
+      border-radius: 999px;
+      font-size: 0.85rem;
+    }
+
+    .project-links {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    .project-links a {
+      color: var(--accent);
+      font-weight: bold;
+    }
+
+    .project-links a:hover {
+      text-decoration: underline;
+    }
+
+    .contact-box {
+      text-align: center;
+      max-width: 700px;
+      margin: 0 auto;
+    }
+
+    .contact-links {
+      display: flex;
+      justify-content: center;
+      gap: 18px;
+      margin-top: 24px;
+      flex-wrap: wrap;
+    }
+
+    footer {
+      padding: 24px 0 36px;
+      text-align: center;
+      color: var(--muted);
+      border-top: 1px solid var(--border);
+    }
+
+    @media (max-width: 860px) {
+      .hero-content,
+      .about-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-text h1 {
+        font-size: 2.3rem;
+      }
+
+      nav {
+        flex-direction: column;
+        gap: 12px;
+      }
+    }
+  </style>
 </head>
 <body>
-    <h1>Hi, I'm Tatiana 👋</h1>
-    <p>Aspiring Data Scientist</p>
+  <header>
+    <div class="container">
+      <nav>
+        <div class="logo">Tatiana Almario</div>
+        <ul class="nav-links">
+          <li><a href="#about">About</a></li>
+          <li><a href="#skills">Skills</a></li>
+          <li><a href="#projects">Projects</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
 
-    <h2>Projects</h2>
-    <ul>
-        <li>Churn Prediction</li>
-        <li>Oil Well Optimization</li>
-        <li>Gold Recovery Model</li>
-        <li>Car Price Prediction</li>
-    </ul>
+  <main>
+    <section class="hero">
+      <div class="container hero-content">
+        <div class="hero-text">
+          <h1>Hi, I'm <span>Tatiana</span><br> Aspiring Data Scientist</h1>
+          <p>
+            I’m building a strong foundation in data science, machine learning, and analytics through hands-on projects in Python, SQL, and predictive modeling. This portfolio highlights my learning journey and real project work.
+          </p>
+          <div class="buttons">
+            <a class="btn btn-primary" href="#projects">View Projects</a>
+            <a class="btn btn-secondary" href="https://github.com/tatigalvis" target="_blank">GitHub Profile</a>
+          </div>
+        </div>
+
+        <div class="hero-card">
+          <h3>Current Focus</h3>
+          <ul>
+            <li>Python, Pandas, NumPy</li>
+            <li>SQL and data analysis</li>
+            <li>Machine learning with Scikit-learn</li>
+            <li>Model evaluation and business insights</li>
+            <li>Building a strong entry-level portfolio</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section id="about" class="about">
+      <div class="container">
+        <h2 class="section-title">About Me</h2>
+        <p class="section-subtitle">
+          I am transitioning into data science and analytics, with a growing portfolio of projects in exploratory data analysis, supervised learning, business forecasting, and predictive modeling.
+        </p>
+
+        <div class="about-grid">
+          <div class="card">
+            <h3>Who I Am</h3>
+            <p>
+              I enjoy turning raw data into insights and practical solutions. My work has included customer churn prediction, pricing models, classification problems, and industrial process optimization.
+            </p>
+          </div>
+
+          <div class="card">
+            <h3>Career Goal</h3>
+            <p>
+              My goal is to start in an entry-level Data Analyst or Data Scientist role where I can continue growing technically while contributing with clean analysis, modeling, and business-focused problem solving.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="skills" class="skills">
+      <div class="container">
+        <h2 class="section-title">Skills</h2>
+        <p class="section-subtitle">
+          Tools and technologies I use in my projects.
+        </p>
+
+        <div class="skills-grid">
+          <div class="skill-box">Python</div>
+          <div class="skill-box">Pandas</div>
+          <div class="skill-box">NumPy</div>
+          <div class="skill-box">SQL</div>
+          <div class="skill-box">Scikit-learn</div>
+          <div class="skill-box">Matplotlib</div>
+          <div class="skill-box">Seaborn</div>
+          <div class="skill-box">Machine Learning</div>
+          <div class="skill-box">EDA</div>
+          <div class="skill-box">Git & GitHub</div>
+        </div>
+      </div>
+    </section>
+
+    <section id="projects" class="projects">
+      <div class="container">
+        <h2 class="section-title">Featured Projects</h2>
+        <p class="section-subtitle">
+          A selection of data science and machine learning projects from my GitHub portfolio.
+        </p>
+
+        <div class="projects-grid">
+          <div class="project-card">
+            <div>
+              <h3>Bank Customer Churn Prediction</h3>
+              <p>
+                Built classification models to predict customer churn, handled class imbalance, and evaluated performance using F1 score and AUC-ROC.
+              </p>
+              <div class="tags">
+                <span class="tag">Python</span>
+                <span class="tag">Scikit-learn</span>
+                <span class="tag">Classification</span>
+              </div>
+            </div>
+            <div class="project-links">
+              <a href="https://github.com/tatigalvis/Supervised-Learning_Beta-Bank" target="_blank">View Project</a>
+            </div>
+          </div>
+
+          <div class="project-card">
+            <div>
+              <h3>Used Car Price Prediction</h3>
+              <p>
+                Compared regression and boosting models to predict car prices, balancing RMSE, training time, and prediction speed.
+              </p>
+              <div class="tags">
+                <span class="tag">Regression</span>
+                <span class="tag">LightGBM</span>
+                <span class="tag">Model Comparison</span>
+              </div>
+            </div>
+            <div class="project-links">
+              <a href="https://github.com/tatigalvis" target="_blank">View Project</a>
+            </div>
+          </div>
+
+          <div class="project-card">
+            <div>
+              <h3>Oil Well Profit Optimization</h3>
+              <p>
+                Predicted oil reserves by region and used bootstrapping to estimate profit, confidence intervals, and risk of losses.
+              </p>
+              <div class="tags">
+                <span class="tag">Linear Regression</span>
+                <span class="tag">Bootstrapping</span>
+                <span class="tag">Business Analysis</span>
+              </div>
+            </div>
+            <div class="project-links">
+              <a href="https://github.com/tatigalvis" target="_blank">View Project</a>
+            </div>
+          </div>
+
+          <div class="project-card">
+            <div>
+              <h3>Gold Recovery Prediction</h3>
+              <p>
+                Validated industrial process data, engineered a custom evaluation approach, and trained models to predict gold recovery efficiency.
+              </p>
+              <div class="tags">
+                <span class="tag">Data Cleaning</span>
+                <span class="tag">sMAPE</span>
+                <span class="tag">ML</span>
+              </div>
+            </div>
+            <div class="project-links">
+              <a href="https://github.com/tatigalvis" target="_blank">View Project</a>
+            </div>
+          </div>
+
+          <div class="project-card">
+            <div>
+              <h3>Megaline Plan Recommendation</h3>
+              <p>
+                Created a classification model to recommend mobile plans based on customer usage behavior and tuned models for accuracy.
+              </p>
+              <div class="tags">
+                <span class="tag">Classification</span>
+                <span class="tag">Python</span>
+                <span class="tag">ML Project</span>
+              </div>
+            </div>
+            <div class="project-links">
+              <a href="https://github.com/tatigalvis/Megaline_Machine-learning" target="_blank">View Project</a>
+            </div>
+          </div>
+
+          <div class="project-card">
+            <div>
+              <h3>Statistical Data Analysis</h3>
+              <p>
+                Analyzed subscriber behavior and profitability, combining data cleaning, revenue calculation, EDA, and statistical testing.
+              </p>
+              <div class="tags">
+                <span class="tag">EDA</span>
+                <span class="tag">Statistics</span>
+                <span class="tag">Pandas</span>
+              </div>
+            </div>
+            <div class="project-links">
+              <a href="https://github.com/tatigalvis/Statistical-Data-Analysis_Megaline" target="_blank">View Project</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact" class="contact">
+      <div class="container">
+        <div class="contact-box">
+          <h2 class="section-title">Contact</h2>
+          <p class="section-subtitle">
+            I’m open to entry-level opportunities in data analytics and data science.
+          </p>
+
+          <div class="contact-links">
+            <a class="btn btn-primary" href="mailto:tatys_almario@icloud.com">Email Me</a>
+            <a class="btn btn-secondary" href="https://github.com/tatigalvis" target="_blank">GitHub</a>
+            <a class="btn btn-secondary" href="https://www.linkedin.com/" target="_blank">LinkedIn</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>© 2026 Tatiana Almario | Data Science Portfolio</p>
+    </div>
+  </footer>
 </body>
 </html>
